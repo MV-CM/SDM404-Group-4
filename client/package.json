@@ -1,0 +1,19 @@
+{
+  "name": "sdm404_2022_group4_ass3_client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MV-CM/SDM404-Group-4.git"
+  },
+  "author": "Gabriel Angelo Ramos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MV-CM/SDM404-Group-4/issues"
+  },
+  "homepage": "https://github.com/MV-CM/SDM404-Group-4#readme"
+}
