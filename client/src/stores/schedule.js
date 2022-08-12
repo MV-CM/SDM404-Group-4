@@ -48,14 +48,7 @@ export const useScheduleStore = defineStore({
 			// Do not create new schedule if schedule with same name exists
 			//! CHANGE "/getschedule" routes based on back-end
 			// const duplicateSchedules = await axios.post(APIURL + "/getschedule", { userEmail, name }).data
-			const duplicateSchedules = [
-				// {
-				// 	name: "schedile_4",
-				// 	description: "description4...",
-				// 	startDate: "2024-05-04T13:06",
-				// 	endDate: "2025-05-04T13:06",
-				// }
-			]
+			const duplicateSchedules = [] // Delete this after
 
 			if (duplicateSchedules.length === 0) {
 				//! CHANGE "/createschedule" route based on back-end
@@ -72,14 +65,7 @@ export const useScheduleStore = defineStore({
 			if (updatedSchedule.name != oldName) {
 				//! CHANGE "/getschedule" routes based on back-end
 				// duplicateSchedules = await axios.post(APIURL + "/getschedule", { userEmail, updatedSchedule.name }).data
-				duplicateSchedules = [
-					{
-						name: "schedile_4",
-						description: "description4...",
-						startDate: "2024-05-04T13:06",
-						endDate: "2025-05-04T13:06",
-					}
-				]
+				duplicateSchedules = [] // Delete this after
 			}
 			if (duplicateSchedules.length === 0) {
 				//! CHANGE "/updateschedule" route based on back-end
