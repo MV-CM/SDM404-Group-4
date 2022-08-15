@@ -39,9 +39,6 @@ export default {
 		const router = useRouter()
 		const route = useRoute()
 
-		const userStore = useUserStore()
-		const { email } = storeToRefs(userStore)
-
 		const scheduleStore = useScheduleStore()
 		const { updateSchedule } = scheduleStore
 		const { scheduleList } = storeToRefs(scheduleStore)
@@ -52,7 +49,7 @@ export default {
 		const errorMessage = ref("")
 
 		const saveSchedule = async () => {
-			let r = await updateSchedule(email.value, scheduleName, schedule)
+			let r = await updateSchedule(scheduleName, schedule)
 			if (r === "success") {
 			router.push("/dashboard")
 			} else if (r === "error_name") {

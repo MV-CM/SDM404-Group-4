@@ -53,12 +53,13 @@ export default {
 
 		const createSchedule = async () => {
 			const newSchedule = {
-				name,
-				startDate,
-				endDate,
-				description
+				email: email.value,
+				name: name.value,
+				startDate: startDate.value,
+				endDate: endDate.value,
+				description: description.value
 			}
-			const r = await addSchedule(email.value, newSchedule)
+			const r = await addSchedule(newSchedule)
 			if (r === "success") {
 				router.push("/dashboard")
 			} else if (r === "error_name") {

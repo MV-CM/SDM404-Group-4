@@ -1,7 +1,6 @@
 import { defineStore } from "pinia"
 import axios from "axios"
 
-//! CHANGE change the port and/or address based onback-end
 const APIURL = "http://localhost:3001/api"
 
 export const useScheduleStore = defineStore({
@@ -10,66 +9,33 @@ export const useScheduleStore = defineStore({
 		scheduleList: null
 	}),
 	actions: {
-		async getScheduleList(userEmail) {
-			//! CHANGE "/getschedules" routes based on back-end
-			// const res = await axios.post(APIURL + "/getschedules", { userEmail })
-			const res = { // Delete this after
-				data: [
-					{
-						name: "schedule_1",
-						description: "description...",
-						startDate: "2021-05-04T15:00",
-						endDate: "2022-05-04T13:06",
-					},
-					{
-						name: "schedile_2",
-						description: "description2...",
-						startDate: "2022-05-04T13:06",
-						endDate: "2023-05-04T13:06",
-					},
-					{
-						name: "schedile_3",
-						description: "description3...",
-						startDate: "2023-05-04T13:06",
-						endDate: "2024-05-04T13:06",
-					},
-					{
-						name: "schedile_4",
-						description: "description4...",
-						startDate: "2024-05-04T13:06",
-						endDate: "2025-05-04T13:06",
-					}
-				]
-			}
-
+		async getScheduleList(email) {
+			const res = await axios.post(APIURL + "/getschedules", { email })
+			res.data.forEach(s => {
+				s.startDate = s.startDate.slice(0,16)
+				s.endDate = s.endDate.slice(0,16)
+			})
 			this.scheduleList = res.data
 		},
-		async addSchedule(userEmail, newSchedule) {
+		async addSchedule(newSchedule) {
 			// Do not create new schedule if schedule with same name exists
-			//! CHANGE "/getschedule" routes based on back-end
-			// const duplicateSchedules = await axios.post(APIURL + "/getschedule", { userEmail, name }).data
-			const duplicateSchedules = [] // Delete this after
-
-			if (duplicateSchedules.length === 0) {
-				//! CHANGE "/createschedule" route based on back-end
-				// await axios.post(APIURL + "/createschedule", newSchedule)
+			const duplicateSchedules = await axios.post(APIURL + "/getschedule", { email: newSchedule.email, name: newSchedule.name }).data
+			if (!duplicateSchedules?.length > 0) {
+				await axios.post(APIURL + "/createschedule", newSchedule)
 				this.scheduleList.push(newSchedule)
 				return "success"
 			} else {
 				return "error_name"
 			}
 		},
-		async updateSchedule(userEmail, oldName, updatedSchedule) {
+		async updateSchedule(oldName, updatedSchedule) {
 			// Do not update a schedule name if name already belonds to another schedule
 			let duplicateSchedules = []
 			if (updatedSchedule.name != oldName) {
-				//! CHANGE "/getschedule" routes based on back-end
-				// duplicateSchedules = await axios.post(APIURL + "/getschedule", { userEmail, updatedSchedule.name }).data
-				duplicateSchedules = [] // Delete this after
+				duplicateSchedules = await axios.post(APIURL + "/getschedule", { email: updatedSchedule.email, name: updatedSchedule.name }).data
 			}
-			if (duplicateSchedules.length === 0) {
-				//! CHANGE "/updateschedule" route based on back-end
-				// await axios.post(APIURL + "/updateschedule", { userEmail, name, newSchedule})
+			if (!duplicateSchedules?.length > 0) {
+				await axios.post(APIURL + "/updateschedule", updatedSchedule)
 				const updateIndex = this.scheduleList.findIndex((s) => s.name === oldName)
 				this.scheduleList[updateIndex] = updatedSchedule
 				return "success"
@@ -77,9 +43,8 @@ export const useScheduleStore = defineStore({
 				return "error_name"
 			}
 		},
-		async removeSchedule(userEmail, schedule) {
-			//! CHANGE "/deleteschedule" routes based on back-end
-			// await axios.post(APIURL + "/deleteschedule", { userEmail, name })
+		async removeSchedule(email, schedule) {
+			await axios.post(APIURL + "/deleteschedule", { email, name: schedule.name })
 			this.scheduleList = this.scheduleList.filter((s) => s.name !== schedule.name)
 		},
 		clearScheduleList() {
