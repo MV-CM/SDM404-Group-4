@@ -44,7 +44,7 @@ export default {
 		const { scheduleList } = storeToRefs(scheduleStore)
 
 		const scheduleName = route.params.scheduleName
-		const schedule = { ...scheduleList.value.find((s) => s.name === scheduleName) }
+		const schedule = { ...scheduleList.value?.find((s) => s.name === scheduleName) }
 
 		const errorMessage = ref("")
 

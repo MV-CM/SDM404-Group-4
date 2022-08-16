@@ -47,7 +47,6 @@ apiRouter.post("/api/getschedule", (req, res) => {
 	Schedule
 		.find(query)
 		.then(result => {
-			console.log(result);
 			res.status(200).json(result)
 		})
 })
@@ -83,11 +82,15 @@ apiRouter.post("/api/deleteschedule", (req, res) => {
 })
 
 apiRouter.post("/api/updateschedule", (req, res) => {
-	console.log(req.body);
 	Schedule
 		.updateOne({ email: req.body.email },
 			{
-				$set: req.body
+				$set: {
+					name: req.body.name,
+					description: req.body.description,
+					startDate: req.body.startDate,
+					endDate: req.body.endDate
+				}
 			}
 		)
 		.then(result => {
