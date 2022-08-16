@@ -12,8 +12,12 @@ export const useScheduleStore = defineStore({
 		async getScheduleList(email) {
 			const res = await axios.post(APIURL + "/getschedules", { email })
 			res.data.forEach(s => {
-				s.startDate = s.startDate.slice(0,16)
-				s.endDate = s.endDate.slice(0,16)
+				if (s.startDate) {
+					s.startDate = s.startDate.slice(0,16)
+				}
+				if (s.endDate) {
+					s.endDate = s.endDate.slice(0,16)
+				}
 			})
 			this.scheduleList = res.data
 		},

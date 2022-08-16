@@ -83,7 +83,6 @@ apiRouter.post("/api/deleteschedule", (req, res) => {
 })
 
 apiRouter.post("/api/updateschedule", (req, res) => {
-	console.log(req.body);
 	Schedule
 		.updateOne({ email: req.body.email },
 			{
